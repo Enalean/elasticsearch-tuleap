@@ -1,14 +1,7 @@
-#
-# ElasticSearch Dockerfile
-#
-# https://github.com/dockerfile/elasticsearch
-#
- 
-# Pull base image.
-FROM dockerfile/elasticsearch
+FROM elasticsearch:1
 
-# Install mapper
-RUN /elasticsearch/bin/plugin -install elasticsearch/elasticsearch-mapper-attachments/2.0.0
+MAINTAINER Thomas Gerbet <thomas.gerbet@enalean.com>
 
-# Install head (development)
-RUN /elasticsearch/bin/plugin -install mobz/elasticsearch-head
+RUN plugin install elasticsearch/elasticsearch-mapper-attachments/2.7.1
+
+RUN plugin install mobz/elasticsearch-head

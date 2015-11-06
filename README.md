@@ -1,25 +1,20 @@
-## ElasticSearch tuleap Dockerfile
+## ElasticSearch Tuleap Development Dockerfile
 
-Based on [dockerfile/elasticsearch](http://dockerfile.github.io/#/elasticsearch), this repository allow to build docker image with plugins needed for development.
+Based on the official [ElasticSearch image](https://hub.docker.com/_/elasticsearch/),
+two plugins have been added:
+ * [Mapper Attachments Type](https://github.com/elastic/elasticsearch-mapper-attachments) used
+ to index file attachments
+ * [elasticsearch-head](https://mobz.github.io/elasticsearch-head/) which is a web front end
+ for an ElasticSearch cluster. It's an useful tool in a dev env.
 
-### Installation & configuration
+### Access to the web front end
+The web front end could be accessed through this URL: http://<your_docker_instance>:9200/\_plugins/head/
 
-  1. Create a mountable data directory `<data-dir>` on the host.
+### Usage
+A Docker Compose file is provided with the Tuleap sources, you should probably
+use it.
 
-  2. Create ElasticSearch config file at `<data-dir>/elasticsearch.yml`.
-
-    ```yml
-    path:
-      logs: /data/log
-      data: /data/data
-
-    script.disable_dynamic: false
-    ```
-
-  3. Start a container by mounting data directory and specifying the custom configuration file:
-
+If you really do not want to use Docker Compose, you could probably do something like that:
     ```sh
-    docker run -d -p 9200:9200 -v <data-dir>:/data enalean/elasticsearch-tuleap /elasticsearch/bin/elasticsearch -Des.config=/data/elasticsearch.yml
+    docker run -d -p 9200:9200 -Des.script.disable_dynamic=false
     ```
-
-After few seconds, open `http://<host>:9200` to see the result.
